@@ -8,6 +8,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+
 router = routers.DefaultRouter()
 router.register('users', UserViewSet, basename='user')
 router.register('artist', ArtistViewSet, basename='artist')
@@ -18,6 +19,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('app/', include('base.urls')),
     path('auth/', obtain_auth_token),
+    path('', include(router.urls)),
 ]
-urlpatterns += router.urls
+
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

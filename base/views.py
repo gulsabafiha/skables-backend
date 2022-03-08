@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from .models import Customuser
 from rest_framework import viewsets,status
 from rest_framework.permissions import AllowAny
 from .serializers import PaintingSerializer, UserSerializer, ArtistSerializer
@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = Customuser.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
 

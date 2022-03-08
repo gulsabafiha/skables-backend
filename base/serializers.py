@@ -1,7 +1,7 @@
 from multiprocessing import managers
 from tkinter.tix import Tree
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from .models import Customuser
 from .models import Artist, Medium, Painting, Review, Style, Subject
 
 
@@ -12,8 +12,9 @@ class UserSerializer(serializers.ModelSerializer):
                                       "min_length": "Password must be longer than 8 characters"})
 
     class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        model = Customuser
+        fields = ['username', 'email', 'password1',
+                  'password2', 'phone']
 
     def validate(self, data):
         if data["password1"] != data["password2"]:
@@ -21,36 +22,39 @@ class UserSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        user = User.objects.create(
+        user = Customuser.objects.create(
             username=validated_data["username"],
-            email=validated_data["email"],
+            email=validated_data["email"],   
+           phone=validated_data["phone"],   
         )
         user.set_password(validated_data["password1"])
-        # user.set_phone(validated_data["phone"])
         user.save()
         return user
 
 
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Subject
-        fields='__all__'
+        model = Subject
+        fields = '__all__'
+
 
 class StyleSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Style
-        fields='__all__'
+        model = Style
+        fields = '__all__'
+
 
 class MediumSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Medium
-        fields='__all__'
+        model = Medium
+        fields = '__all__'
 
 
 class ArtistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artist
         fields = '__all__'
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
@@ -60,10 +64,10 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class PaintingSerializer(serializers.ModelSerializer):
     artist = ArtistSerializer(many=False, read_only=True)
-    subject=SubjectSerializer(many=True,read_only=True)
-    medium=MediumSerializer(many=True,read_only=True)
-    style=StyleSerializer(many=True,read_only=True)
-    rating=ReviewSerializer(many=False,read_only=True)
+    subject = SubjectSerializer(many=True, read_only=True)
+    medium = MediumSerializer(many=True, read_only=True)
+    style = StyleSerializer(many=True, read_only=True)
+    rating = ReviewSerializer(many=False, read_only=True)
 
     class Meta:
         model = Painting
@@ -72,5 +76,4 @@ class PaintingSerializer(serializers.ModelSerializer):
                   'like', 'views', 'is_feature', 'is_popular', 'is_new', 'is_sale',
                   'sale_percentage', 'style',
                   'subject', 'medium', 'material', 'specification',
-                  'size', 'orientation', 'color', 'created_year','rating']
-
+                  'size', 'orientation', 'color', 'created_year', 'rating']
