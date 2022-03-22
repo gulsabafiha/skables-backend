@@ -10,7 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-import os,_tkinter
+import os
+import _tkinter
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = 'django-insecure-@2r_ej9pk!o+!9_vi-4j3mmg0%r01*9v8rxp9i9soda*1_6&i0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -131,7 +132,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
@@ -142,7 +142,7 @@ STATIC_FILES_DIRS = [
     BASE_DIR/'static'
 ]
 MEDIA_ROOT = 'static/images'
-STATIC_ROOT=os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
