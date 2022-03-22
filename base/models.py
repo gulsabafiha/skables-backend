@@ -17,7 +17,7 @@ class Artist(models.Model):
     artist_country = models.CharField(max_length=150, blank=True, null=True)
     artist_image = models.ImageField(null=True, blank=True)
     artistry = RichTextField(blank=True, null=True)
-    education = RichTextField(max_length=150, blank=True, null=True)
+    education = RichTextField( blank=True, null=True)
 
     def __str__(self):
         return self.artist_name

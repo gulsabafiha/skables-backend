@@ -8,7 +8,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-
 router = routers.DefaultRouter()
 router.register('users', UserViewSet, basename='user')
 router.register('artist', ArtistViewSet, basename='artist')
