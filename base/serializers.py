@@ -1,5 +1,4 @@
-from multiprocessing import managers
-from tkinter.tix import Tree
+
 from rest_framework import serializers
 from .models import Customuser
 from .models import Artist, Medium, Painting, Review, Style, Subject
