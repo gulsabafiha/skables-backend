@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['skabelse.herokuapp.com']
+ALLOWED_HOSTS = ['https://skabelse.herokuapp.com/']
 
 
 # Application definition
