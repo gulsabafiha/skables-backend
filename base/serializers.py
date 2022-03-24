@@ -1,19 +1,25 @@
-
+from unicodedata import name
 from rest_framework import serializers
 from .models import Customuser
 from .models import Artist, Medium, Painting, Review, Style, Subject
-
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True, min_length=8, error_messages={
                                       "min_length": "Password must be longer than 8 characters"})
     password2 = serializers.CharField(write_only=True, min_length=8, error_messages={
                                       "min_length": "Password must be longer than 8 characters"})
-
+    name=serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Customuser
-        fields = ['username', 'email', 'password1',
-                  'password2', 'phone']
+        fields = ['id','username', 'email', 'password1',
+                  'password2', 'phone','name']
+    
+    def get_name(self,obj):
+        name=obj.first_name
+        if name == '':
+            name=obj.email
+        return name
 
     def validate(self, data):
         if data["password1"] != data["password2"]:
@@ -30,6 +36,16 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+class UserSerializerWithToken(UserSerializer):
+    token=serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model=Customuser
+        fields=['username', 'email', 'password1',
+                  'password2', 'phone','token']
+
+    def get_token(self,obj):
+        token=RefreshToken.for_user(obj)
+        return str(token.access_token)
 
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:

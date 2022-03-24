@@ -3,13 +3,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from base.views import *
-from rest_framework.authtoken.views import obtain_auth_token
+# from rest_framework.authtoken.views import obtain_auth_token
 from django.conf import settings
 from django.conf.urls.static import static
+from base.views import MyTokenObtainPairView
 
 
 router = routers.DefaultRouter()
-router.register('users', UserViewSet, basename='user')
+# router.register('users', UserViewSet, basename='user')
 router.register('artist', ArtistViewSet, basename='artist')
 router.register('painting', PaintingViewSet, basename='painting')
 
@@ -17,7 +18,7 @@ router.register('painting', PaintingViewSet, basename='painting')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('app/', include('base.urls')),
-    path('auth/', obtain_auth_token),
+    path('user/login/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('', include(router.urls)),
 ]
 
